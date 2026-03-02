@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: notification-service
+    name: notifications-service
   config:
     import: "optional:configserver:"
   cloud:
