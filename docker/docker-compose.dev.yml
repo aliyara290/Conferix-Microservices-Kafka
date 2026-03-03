@@ -13,7 +13,7 @@ services:
     networks:
       - conferix-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U aliyara29" ]
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -32,7 +32,7 @@ services:
     networks:
       - conferix-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U aliyara29" ]
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -41,20 +41,36 @@ services:
     image: postgres:15-alpine
     container_name: conferix-keycloak-db
     environment:
-      POSTGRES_DB: conferix_db
+      POSTGRES_DB: conferix_keycloak_db
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - "5434:5432"
+#    ports:
+#      - "5434:5432"
     volumes:
       - keycloak-data:/var/lib/postgresql/data
     networks:
       - conferix-network
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U aliyara29" ]
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER}" ]
       interval: 10s
       timeout: 5s
       retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-conferix
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@conferix.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    networks:
+      - conferix-network
+    depends_on:
+      - keynote-db
+      - conference-db
+      - keycloak-db
 
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.1
@@ -62,7 +78,7 @@ services:
     command: start-dev
     environment:
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://conferix-keycloak-db:5432/keycloak_db
+      KC_DB_URL: jdbc:postgresql://conferix-keycloak-db:5432/conferix_keycloak_db
       KC_DB_USERNAME: ${POSTGRES_USER}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
       KEYCLOAK_ADMIN: admin
@@ -70,7 +86,7 @@ services:
 
       KC_HTTP_PORT: 8080
     ports:
-      - "8080:8080"
+      - "8090:8080"
     #    volumes:
     #      - ./api-gateway/themes:/opt/keycloak/themes
     depends_on:
