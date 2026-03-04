@@ -1,0 +1,16 @@
+# Logs
+*.log
+
+# IDE
+.idea/
+*.iml
+*.iws
+
+# Build
+target/
+bin/
+out/
+
+# OS
+.DS_Store
+Thumbs.db
