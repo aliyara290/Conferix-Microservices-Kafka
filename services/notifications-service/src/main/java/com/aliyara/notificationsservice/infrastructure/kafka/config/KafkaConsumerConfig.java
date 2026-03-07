@@ -13,7 +13,6 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.DefaultErrorHandler;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.util.backoff.FixedBackOff;
 
 import java.util.HashMap;
@@ -49,12 +48,12 @@ public class KafkaConsumerConfig {
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         config.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
-        config.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class);
+        config.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, "org.springframework.kafka.support.serializer.JsonDeserializer");
         
-        // Configuration du JsonDeserializer pour JsonNode (generic type)
-        config.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
-        config.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
-        config.put(JsonDeserializer.VALUE_DEFAULT_TYPE, JsonNode.class.getName());
+        // Configuration du JsonDeserializer pour JsonNode (generic type) - Spring Kafka 4.0+
+        config.put("spring.json.trusted.packages", "*");
+        config.put("spring.json.use.type.headers", false);
+        config.put("spring.json.value.default.type", JsonNode.class.getName());
         
         // Optimisations
         config.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 10);
