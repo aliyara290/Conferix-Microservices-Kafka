@@ -101,6 +101,11 @@ public class Notification {
         return this.statut.isRetryable() && this.tentatives < maxTentatives;
     }
     
+    public void incrementerTentatives() {
+        this.tentatives++;
+        this.statut = StatutNotification.EN_ATTENTE;
+    }
+    
     @PrePersist
     protected void onCreate() {
         if (this.createdAt == null) {
