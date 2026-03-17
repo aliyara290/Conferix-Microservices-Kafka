@@ -1,0 +1,11 @@
+{
+    "name": "conferix-infrastructure",
+    "version": "1.0.0",
+    "description": "Microservices Project",
+    "main": "manage-services.js",
+    "scripts": {
+        "start": "node manage-services.js start",
+        "stop": "node manage-services.js stop",
+        "status": "node manage-services.js status"
+    }
+}
