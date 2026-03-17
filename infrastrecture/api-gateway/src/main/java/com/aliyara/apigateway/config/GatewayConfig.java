@@ -7,12 +7,13 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class GatewayConfig {
+
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("keynote-service", r -> r.path("/keynote/**")
                         .filters(f -> f.stripPrefix(1))
-                        .uri("lb://KEYNOTE-SERVICE"))
+                        .uri("lb://KEYNOT-SERVICE"))
                 .route("conference-service", r -> r.path("/conference/**")
                         .filters(f -> f.stripPrefix(1))
                         .uri("lb://CONFERENCE-SERVICE"))

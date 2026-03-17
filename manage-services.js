@@ -7,7 +7,8 @@ const LOG_DIR = __dirname;
 const services = [
     { name: 'discovery-service', dir: 'infrastrecture/discovery-service', port: 8761, wait: 15 },
     { name: 'config-server', dir: 'infrastrecture/config-server', port: 8888, wait: 20 },
-    { name: 'api-gateway', dir: 'infrastrecture/api-gateway', port: 8080, wait: 5 }
+    { name: 'api-gateway', dir: 'infrastrecture/api-gateway', port: 8080, wait: 5 },
+    { name: 'keynot-service', dir: 'services/keynot-service', port: 8081, wait: 10 }
 ];
 
 function sleep(ms) {
