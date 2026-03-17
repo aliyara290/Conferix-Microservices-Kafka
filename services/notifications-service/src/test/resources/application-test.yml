@@ -1,0 +1,70 @@
+# Test Profile Configuration
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+        
+  h2:
+    console:
+      enabled: true
+      
+  flyway:
+    enabled: false
+    
+  kafka:
+    # Use embedded Kafka brokers when available in tests, otherwise fallback to localhost:9092
+    bootstrap-servers: ${spring.embedded.kafka.brokers:localhost:9092}
+    
+  mail:
+    host: localhost
+    port: 25
+    
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      
+# Notification config pour tests
+notification:
+  email:
+    mock: true
+    enabled: true
+    from: test@conferix.com
+  retry:
+    max-attempts: 2
+    delay-seconds: 1
+    
+# Logging minimal pour tests
+logging:
+  level:
+    root: WARN
+    com.aliyara.notificationsservice: DEBUG
+    org.springframework.kafka: WARN
+    org.hibernate.SQL: DEBUG
+    
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+# Kafka topic names expected by the consumers (used by @KafkaListener placeholders)
+app:
+  kafka:
+    topics:
+      keynote-events: keynote-events
+      conference-events: conference-events
+      review-events: review-events
+      inscription-events: inscription-events
