@@ -24,7 +24,8 @@ spring:
     enabled: false
     
   kafka:
-    bootstrap-servers: ${spring.embedded.kafka.brokers}
+    # Use embedded Kafka brokers when available in tests, otherwise fallback to localhost:9092
+    bootstrap-servers: ${spring.embedded.kafka.brokers:localhost:9092}
     
   mail:
     host: localhost
@@ -58,3 +59,12 @@ eureka:
     enabled: false
     register-with-eureka: false
     fetch-registry: false
+
+# Kafka topic names expected by the consumers (used by @KafkaListener placeholders)
+app:
+  kafka:
+    topics:
+      keynote-events: keynote-events
+      conference-events: conference-events
+      review-events: review-events
+      inscription-events: inscription-events

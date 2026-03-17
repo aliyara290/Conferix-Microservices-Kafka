@@ -1,7 +1,6 @@
 package com.aliyara.notificationsservice.infrastructure.email;
 
 import com.aliyara.notificationsservice.domain.entities.Notification;
-import com.aliyara.notificationsservice.domain.enums.StatutNotification;
 import com.aliyara.notificationsservice.infrastructure.repository.NotificationRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -14,7 +13,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 
 @Slf4j
 @Service

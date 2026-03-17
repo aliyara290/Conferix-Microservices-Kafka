@@ -22,7 +22,8 @@ import java.util.Map;
 @EnableKafka
 public class KafkaConsumerConfig {
     
-    @Value("${spring.kafka.bootstrap-servers}")
+    // Allow fallback to embedded Kafka brokers used in tests, and finally to localhost:9092
+    @Value("${spring.kafka.bootstrap-servers:${spring.embedded.kafka.brokers:localhost:9092}}")
     private String bootstrapServers;
     
     @Value("${spring.kafka.consumer.group-id}")
